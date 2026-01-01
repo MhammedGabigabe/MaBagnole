@@ -1,7 +1,7 @@
 CREATE DATABASE mabagnole;
 USE mabagnole;
 
-CREATE TABLE utilisateur (
+CREATE TABLE utilisateurs (
     id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     email VARCHAR(150),
@@ -50,7 +50,7 @@ CREATE TABLE reservations (
         FOREIGN KEY (id_client) REFERENCES utilisateurs(id_utilisateur)
         ON DELETE CASCADE,
     CONSTRAINT fk_vehicule
-        FOREIGN KEY (id_vehi) REFERENCES vehicules(id)
+        FOREIGN KEY (id_vehi) REFERENCES vehicules(id_vehicule)
         ON DELETE CASCADE
 );
 
