@@ -11,7 +11,7 @@ class Client extends Utilisateur{
         if(property_exists($this, $p)){
             $this->$p = $v;
         }else{
-            throw new Exception("la propriété '$p' n'existe pas dans la classe" . get_class());
+            throw new Exception("la propriété '$p' n'existe pas dans la classe" . get_class($this));
         }
     }
 
@@ -19,7 +19,7 @@ class Client extends Utilisateur{
         if(property_exists($this, $p)){
             return $this->$p;
         }else{
-            throw new Exception("la propriété '$p' n'existe pas dans la classe". get_class());
+            throw new Exception("la propriété '$p' n'existe pas dans la classe". get_class($this));
         }
     }
 
@@ -35,7 +35,7 @@ class Client extends Utilisateur{
             $stmt->bindparam(":mdp", $mdpHash);
             $stmt->bindValue(":r", "Client");
             $stmt->bindparam(":t", $this->telephone);
-            $stmt->bindparam(":", $this->cin);
+            $stmt->bindparam(":c", $this->cin);
             $stmt->execute();
             return true;
 

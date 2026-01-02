@@ -1,4 +1,16 @@
 <?php
+require_once "../models/Client.php";
+$c =new Client();
+$c->nom = "ahmd";
+$c->email = "jean@example.com";
+$c->mdp = "a123";
+$c->telephone ="+212600998877";
+$c->cin ="A123456";
+echo "Tentative d'inscription...<br>";
+
+if($c->sInscrire()){
+    echo "inscription effectue";
+}else echo "email deja utilisé !";
 
 ?>
 <!DOCTYPE html>
