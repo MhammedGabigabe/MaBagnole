@@ -24,6 +24,19 @@ abstract class Utilisateur extends BaseModel{
         }
     }
 
+    public function getByEmail($email){
+        $requete = "SELECT * FROM utilisateurs WHERE email = :e";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindparam(":e",$email);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+        
+    }
+
+
 }
 
 ?>
