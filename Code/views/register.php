@@ -1,7 +1,5 @@
 <?php
-require_once '../config/database.php';
-$db = Database::getInstance()->getPdo();
-echo "bien";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

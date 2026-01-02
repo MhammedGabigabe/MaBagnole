@@ -5,7 +5,7 @@ abstract class BaseModel{
     protected $db;
 
     public function __construct(){
-        $this->db = database::getInstance()->getPdo();
+        $this->db = Database::getInstance()->getPdo();
     }
 }
 
