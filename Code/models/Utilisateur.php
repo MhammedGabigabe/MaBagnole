@@ -35,7 +35,17 @@ abstract class Utilisateur extends BaseModel{
         }
         
     }
-
+    
+    public function seConnecter($email, $pw){
+        $utilisateur = $this->getByEmail($email);
+        if($utilisateur === false){
+            return "email_incorrect";
+        }
+        if(!password_verify($pw, $utilisateur['mdp'])){
+            return "mdp_incorrect";
+        }
+        return $utilisateur;
+    }
 
 }
 
