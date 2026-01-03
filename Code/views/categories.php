@@ -1,5 +1,6 @@
 <?php
 require_once "../controllers/categorie.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -69,7 +70,7 @@ require_once "../controllers/categorie.php";
                         <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-wider text-right">Actions</th>
                     </tr>
                 </thead>
-                <form method='POST'>
+                
                     <tbody class="divide-y divide-gray-50">
                         <?php foreach($listeCategories as $cat){ ?>
                             <tr class="hover:bg-emerald-50/30 transition-colors">
@@ -80,14 +81,17 @@ require_once "../controllers/categorie.php";
                                 <td class="px-8 py-5 text-center">
                                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">12 Voitures</span>
                                 </td>
-                                <td class="px-8 py-5 text-right space-x-3">
-                                    <button name="modifier_cat"  class="text-gray-400 hover:text-emerald-600 transition-colors"><i class="fas fa-pen"></i></button>
-                                    <button name="supprimer_cat" value="<?= $cat['id_categorie']?>" class="text-gray-400 hover:text-red-600 transition-colors"><i class="fas fa-trash-can"></i></button>
-                                </td>
+                                <form method="POST">
+                                    <td class="px-8 py-5 text-right space-x-3">
+                                        <button type="submit" value="<?= $cat['id_categorie']?>" name="id_a_modifier" class="text-gray-400 hover:text-emerald-600 transition-colors"><i class="fas fa-pen"></i></button>
+                                        <button name="supprimer_cat" value="<?= $cat['id_categorie']?>" class="text-gray-400 hover:text-red-600 transition-colors"><i class="fas fa-trash-can"></i></button>
+                                    </td>
+                                </form>
                             </tr>
+                            
                         <?php } ?>
                     </tbody>
-                </form>
+                
             </table>
         </div>
     </main>
@@ -154,6 +158,56 @@ require_once "../controllers/categorie.php";
         </div>
     </div>
 
+    <div id="editModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Modifier Catégorie</h3>
+                    <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <form method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nom de la catégorie</label>
+                        <?php if($cat_a_modifier){ ?>
+                            <input type="text" name="nom" required 
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                                value ="<?=$cat_a_modifier['nom'] ?>">
+                        <?php }else{?>
+                            <input type="text" name="nom" required 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                            placeholder="Ex: Sportive, Luxe...">
+                        <?php } ?>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Description</label>
+                        <?php if($cat_a_modifier){ ?>
+                            <textarea name="description" rows="3" 
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                                ><?=$cat_a_modifier['description'] ?></textarea>
+                        <?php }else{?>        
+                            <textarea name="description" rows="3" 
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                                placeholder="Brève description..."></textarea>
+                        <?php } ?>
+                    </div>
+
+                    <div class="pt-4 flex gap-3">
+                        <button onclick="closeEditModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">
+                            Annuler
+                        </button>
+                        <button type="submit" value="<?= $cat['id_categorie']?>" name="modifier" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
+                            Metre à jour
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+
     <script>
         function openModal() {
             document.getElementById('massModal').classList.remove('hidden');
@@ -167,7 +221,16 @@ require_once "../controllers/categorie.php";
         }
         function closeSingleModal() {
             document.getElementById('singleModal').classList.add('hidden');
-        }        
+        }   
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        } 
     </script>
+    <?php if ($cat_a_modifier){ ?>
+        <script>
+            document.getElementById('editModal').classList.remove('hidden');
+        </script>
+    <?php } ?>
 </body>
 </html>

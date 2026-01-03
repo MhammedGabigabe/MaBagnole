@@ -3,6 +3,22 @@ require_once "../models/Categorie.php";
 
 $categorie =new Categorie();
 
+$listeCategories = $categorie->getAll();
+
+$cat_a_modifier = null;
+if(isset($_POST['id_a_modifier'])){
+    $cat_a_modifier = $categorie->getById($_POST['id_a_modifier']);
+}
+
+if(isset($_POST['modifier'])){
+    $categorie->setId($_POST['modifier']);
+    $categorie->setNom($_POST['nom']);
+    $categorie->setDescription($_POST['description']);
+    $categorie->modifierCategorie();
+    header("Location: ../views/categories.php");
+    exit;
+}
+
 if(isset($_POST['ajouter_seul'])){
     
     $categorie->setNom($_POST['nom']);
@@ -32,12 +48,11 @@ if(isset($_POST['ajouter_mass'])){
     exit;
 }
 
-$listeCategories = $categorie->getAll();
-
 if(isset($_POST['supprimer_cat'])){
     $id = $_POST['supprimer_cat'];
     $categorie->supprimerCategorie($id);
     header("Location: ../views/categories.php");
     exit;
 }
+
 ?>

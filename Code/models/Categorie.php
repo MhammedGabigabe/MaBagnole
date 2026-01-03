@@ -6,6 +6,10 @@ class Categorie extends BaseModel {
     private $nom;
     private $description ;
 
+    public function setId($valeur){
+        $this->idCategorie = $valeur;
+    }
+
     public function getId(){
         return $this->idCategorie;
     }
@@ -59,6 +63,21 @@ class Categorie extends BaseModel {
         $stmt->execute();
     }
 
-    
+    public function getById($id){
+        $requete = "SELECT * FROM categories WHERE id_categorie = :id;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function modifierCategorie(){
+        $requete = "UPDATE categories SET nom = :n, description = :d WHERE id_categorie = :id;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":n", $this->nom);
+        $stmt->bindParam(":d", $this->description);
+        $stmt->bindParam(":id",$this->idCategorie);
+        return $stmt->execute();
+    }
 }
 ?>
