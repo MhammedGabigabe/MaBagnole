@@ -27,13 +27,22 @@ class Categorie extends BaseModel {
     }
 
     public function ajouterCategorie(){
-        $requete = "INSERT INTO categories(nom, description) VALUES (:n, :d);";
+        $requete = "INSERT INTO categories (nom, description) VALUES (:n, :d);";
         $stmt = $this->db->prepare($requete);
         $stmt->bindParam(":n", $this->nom);
         $stmt->bindParam(":d", $this->description);
         return $stmt->execute();
     }
 
-    
+    public function ajouterEnMasse($categories){
+        $requete = "INSERT INTO categories (nom, description) VALUES (:n, :d)";
+        $stmt = $this->db->prepare($requete);
+
+        foreach ($categories as $cat) {
+                $stmt->bindValue(":n", $cat['nom']);
+                $stmt->bindValue(":d", $cat['desc']);
+                $stmt->execute();
+        }
+    }
 }
 ?>

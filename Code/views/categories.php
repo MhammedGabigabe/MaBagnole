@@ -94,15 +94,15 @@
                     <h3 class="text-2xl font-bold text-gray-800">Ajout en masse</h3>
                     <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
                 </div>
-                <form action="../controllers/category_controller.php" method="POST">
+                <form action="../controllers/categorie.php" method="POST">
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Liste des catégories (une par ligne)</label>
                     <textarea name="categories_list" rows="6" 
                         class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300"
-                        placeholder="Luxe&#10;Utilitaire&#10;SUV 4x4..."></textarea>
+                        placeholder="Luxe;Voitures haut de gamme&#10;Utilitaire;Véhicules professionnels&#10;SUV;4x4 et SUV familiaux..."></textarea>
                     
                     <div class="mt-6 flex gap-3">
                         <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">Annuler</button>
-                        <button type="submit" name="mass_add" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
+                        <button type="submit" name="ajouter_mass" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
                             Enregistrer la liste
                         </button>
                     </div>
