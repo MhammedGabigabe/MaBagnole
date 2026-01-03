@@ -49,10 +49,10 @@
         </div>
 
         <div class="flex gap-4 mb-6">
-            <button onclick="openModal('single')" class="bg-white border-2 border-emerald-600 text-emerald-600 px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-50 transition-all text-sm">
+            <button onclick="openSingleModal()" class="bg-white border-2 border-emerald-600 text-emerald-600 px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-50 transition-all text-sm">
                 + Ajouter une catégorie
             </button>
-            <button onclick="openModal('mass')" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all text-sm">
+            <button onclick="openModal()" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all text-sm">
                 <i class="fas fa-layer-group mr-2"></i> Ajout en masse
             </button>
         </div>
@@ -92,7 +92,7 @@
             <div class="p-8">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-bold text-gray-800">Ajout en masse</h3>
-                    <button onclick="closeModal('mass')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
                 </div>
                 <form action="../controllers/category_controller.php" method="POST">
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Liste des catégories (une par ligne)</label>
@@ -101,7 +101,7 @@
                         placeholder="Luxe&#10;Utilitaire&#10;SUV 4x4..."></textarea>
                     
                     <div class="mt-6 flex gap-3">
-                        <button type="button" onclick="closeModal('mass')" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">Annuler</button>
+                        <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">Annuler</button>
                         <button type="submit" name="mass_add" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
                             Enregistrer la liste
                         </button>
@@ -111,13 +111,58 @@
         </div>
     </div>
 
+    <div id="singleModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Nouvelle Catégorie</h3>
+                    <button onclick="closeSingleModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <form action="../controllers/categorie.php" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nom de la catégorie</label>
+                        <input type="text" name="nom" required 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                            placeholder="Ex: Sportive, Luxe...">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Description</label>
+                        <textarea name="description" rows="3" 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                            placeholder="Brève description..."></textarea>
+                    </div>
+
+                    <div class="pt-4 flex gap-3">
+                        <button type="button" onclick="closeSingleModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">
+                            Annuler
+                        </button>
+                        <button type="submit" name="ajouter_seul" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
+                            Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function openModal(type) {
-            if(type === 'mass') document.getElementById('massModal').classList.remove('hidden');
+        function openModal() {
+            document.getElementById('massModal').classList.remove('hidden');
         }
-        function closeModal(type) {
-            if(type === 'mass') document.getElementById('massModal').classList.add('hidden');
+        function closeModal() {
+            document.getElementById('massModal').classList.add('hidden');
         }
+
+        function openSingleModal() {
+            document.getElementById('singleModal').classList.remove('hidden');
+        }
+        function closeSingleModal() {
+            document.getElementById('singleModal').classList.add('hidden');
+        }        
     </script>
 </body>
 </html>

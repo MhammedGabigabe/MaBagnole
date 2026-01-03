@@ -14,13 +14,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $res = $client->sInscrire();
 
-    if($res){
-        header("Location: ../views/login.php");
+    if($res == "email_utilise"){
+        $_SESSION['msg'] = "email deja utilisé !";
+        header("Location: ../views/register.php");
+        exit;
+    }elseif($res == "erreur"){
+        $_SESSION['msg'] = "erreur lors de l'inscription !";
+        header("Location: ../views/register.php");
         exit;
     }else{
-       $_SESSION['msg'] = "email deja utilisé !";
-       header("Location: ../views/register.php");
-       exit;
+        header("Location: ../views/login.php");
+        exit;
     }
 }
 

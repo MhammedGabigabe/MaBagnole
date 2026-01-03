@@ -38,10 +38,12 @@ class Client extends Utilisateur{
             $stmt->bindValue(":r", "Client");
             $stmt->bindparam(":t", $this->telephone);
             $stmt->bindparam(":c", $this->cin);
-                        
-            return $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }          
+            return "erreur";
 
-        }else return false;
+        }else return "email_utilise";
     }
 
     public function getAll(){

@@ -25,5 +25,15 @@ class Categorie extends BaseModel {
     public function getDescription(){
         return $this->description;
     }
+
+    public function ajouterCategorie(){
+        $requete = "INSERT INTO categories(nom, description) VALUES (:n, :d);";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":n", $this->nom);
+        $stmt->bindParam(":d", $this->description);
+        return $stmt->execute();
+    }
+
+    
 }
 ?>
