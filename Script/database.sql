@@ -2,27 +2,26 @@ CREATE DATABASE mabagnole;
 USE mabagnole;
 
 CREATE TABLE utilisateurs (
-    id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
+    id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL,
-    email VARCHAR(150),
+    email VARCHAR(150) NOT NULL UNIQUE,
     mdp VARCHAR(255) NOT NULL,
     role ENUM('Client', 'Admin') NOT NULL,
-    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     telephone VARCHAR(20) UNIQUE,
     cin VARCHAR(20) UNIQUE,
     is_active BOOLEAN DEFAULT TRUE
 
 );
-CREATE UNIQUE INDEX ind_email_utilisateur ON utilisateurs (email);
 
 CREATE TABLE categories (
-    id_categorie INT AUTO_INCREMENT PRIMARY KEY,
+    id_categorie INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL,
     description TEXT
 );
 
 CREATE TABLE vehicules (
-    id_vehicule INT AUTO_INCREMENT PRIMARY KEY,
+    id_vehicule INT PRIMARY KEY AUTO_INCREMENT,
     modele VARCHAR(100) NOT NULL,
     marque VARCHAR(100) NOT NULL,
     prix_jour DECIMAL(10,2) NOT NULL,
@@ -37,7 +36,7 @@ CREATE TABLE vehicules (
 );
 
 CREATE TABLE reservations (
-    id_reservation INT AUTO_INCREMENT PRIMARY KEY,
+    id_reservation INT PRIMARY KEY AUTO_INCREMENT,
     id_client INT NOT NULL,
     id_vehi INT NOT NULL,
     date_debut DATETIME NOT NULL,
@@ -55,11 +54,11 @@ CREATE TABLE reservations (
 );
 
 CREATE TABLE avis (
-    id_avis INT AUTO_INCREMENT PRIMARY KEY,
+    id_avis INT PRIMARY KEY AUTO_INCREMENT,
     statut BOOLEAN DEFAULT TRUE,
     commentaire TEXT,
     note INT CHECK (note BETWEEN 1 AND 5),
-    date_avis DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_avis TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_reservation int NOT NULL,
     CONSTRAINT fk_reservatioin
         FOREIGN KEY (id_reservation) REFERENCES reservations(id_reservation)
@@ -69,7 +68,7 @@ CREATE TABLE avis (
 CREATE TABLE favoris (
     id_client INT NOT NULL,
     id_vehi INT NOT NULL,
-    date_favori DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_favori TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_client, id_vehi),
     CONSTRAINT fk_favoris_client
         FOREIGN KEY (id_client) REFERENCES utilisateurs(id_utilisateur)

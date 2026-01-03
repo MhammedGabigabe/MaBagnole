@@ -1,3 +1,14 @@
+<?php
+session_start();
+if(isset($_SESSION['msg'])){
+?>
+<script>
+    alert("<?=$_SESSION['msg'];?>");
+</script>
+<?php
+unset($_SESSION['msg']);   
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,9 +20,9 @@
 </head>
 <body class="h-screen w-full flex overflow-hidden bg-gray-50">
 
-    <div class="hidden md:flex md:w-3/5 bg-cover bg-center relative" 
-         style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=1200');">
-        <div class="absolute inset-0 bg-blue-900/20 backdrop-blur-[2px]"></div>
+    <div class="hidden md:flex md:w-4/5 bg-cover bg-center relative" 
+         style="background-image: url('https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fmabagnole-694e4b819dc15769016369.jpg&w=1280&q=75');">
+        <div class="absolute inset-0 bg-blue-900/20 "></div>
         <div class="relative z-10 m-12 self-end">
             <h1 class="text-5xl font-black text-white italic">MA<span class="text-blue-400">BAGNOLE</span></h1>
             <p class="text-white/80 text-xl mt-2 font-light">La liberté de rouler, en un clic.</p>
@@ -25,7 +36,7 @@
                 <p class="text-gray-500 mt-2">Heureux de vous revoir parmi nous.</p>
             </div>
 
-            <form action="auth_process.php" method="POST" class="space-y-6">
+            <form action="../controllers/login.php" method="POST" class="space-y-6">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Email</label>
                     <input type="email" name="email" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all">
@@ -34,7 +45,7 @@
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Mot de passe</label>
                     <input type="password" name="password" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all">
                 </div>
-                <button type="submit" name="action" value="login" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95">
+                <button type="submit" name="seConnecter" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95">
                     SE CONNECTER
                 </button>
             </form>

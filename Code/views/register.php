@@ -1,17 +1,13 @@
 <?php
-require_once "../models/Client.php";
-$c =new Client();
-$c->nom = "ahmd";
-$c->email = "jean@example.com";
-$c->mdp = "a123";
-$c->telephone ="+212600998877";
-$c->cin ="A123456";
-echo "Tentative d'inscription...<br>";
-
-if($c->sInscrire()){
-    echo "inscription effectue";
-}else echo "email deja utilisé !";
-
+session_start();
+if(isset($_SESSION['msg'])){
+?>
+<script>
+    alert("<?=$_SESSION['msg'];?>");
+</script>
+<?php
+unset($_SESSION['msg']);   
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,9 +20,9 @@ if($c->sInscrire()){
 </head>
 <body class="h-screen w-full flex overflow-hidden bg-gray-50">
 
-    <div class="hidden md:flex md:w-3/5 bg-cover bg-center relative" 
-         style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1200');">
-        <div class="absolute inset-0 bg-emerald-900/20 backdrop-blur-[2px]"></div>
+    <div class="hidden md:flex md:w-4/5 bg-cover bg-center relative" 
+         style="background-image: url('https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fmabagnole-694e4b819dc15769016369.jpg&w=1280&q=75');">
+        <div class="absolute inset-0 bg-emerald-900/20 "></div>
         <div class="relative z-10 m-12 self-end">
             <h1 class="text-5xl font-black text-white italic">MA<span class="text-emerald-400">BAGNOLE</span></h1>
             <p class="text-white/80 text-xl mt-2 font-light">Créez votre profil et réservez en 2 minutes.</p>
@@ -40,7 +36,7 @@ if($c->sInscrire()){
                 <p class="text-gray-500 mt-1">Rejoignez la communauté MaBagnole.</p>
             </div>
 
-            <form action="auth_process.php" method="POST" class="space-y-3">
+            <form action="../controllers/register.php" method="POST" class="space-y-3">
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-[10px] font-bold text-gray-700 uppercase mb-1">Nom</label>
@@ -67,7 +63,7 @@ if($c->sInscrire()){
                     <input type="password" name="password" required class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-emerald-500 outline-none text-sm">
                 </div>
 
-                <button type="submit" name="action" value="register" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 text-sm uppercase tracking-wide">
+                <button type="submit" name="creerCompte" value="" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 text-sm uppercase tracking-wide">
                     Créer mon compte
                 </button>
             </form>

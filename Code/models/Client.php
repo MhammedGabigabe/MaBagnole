@@ -25,10 +25,12 @@ class Client extends Utilisateur{
 
     public function sInscrire(){
         $utilisateur = $this->getByEmail($this->email);
-        if($utilisateur === false){
+        if(!$utilisateur){
             $requete = "INSERT INTO utilisateurs (nom,email,mdp,role,telephone,cin)
                         VALUES (:n, :e, :mdp, :r, :t, :c);";
+
             $mdpHash = password_hash($this->mdp,PASSWORD_DEFAULT);
+
             $stmt = $this->db->prepare($requete);
             $stmt->bindparam(":n", $this->nom);
             $stmt->bindparam(":e", $this->email);
@@ -36,8 +38,8 @@ class Client extends Utilisateur{
             $stmt->bindValue(":r", "Client");
             $stmt->bindparam(":t", $this->telephone);
             $stmt->bindparam(":c", $this->cin);
-            $stmt->execute();
-            return true;
+                        
+            return $stmt->execute();
 
         }else return false;
     }

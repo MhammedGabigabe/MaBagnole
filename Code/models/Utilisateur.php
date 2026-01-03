@@ -1,7 +1,7 @@
 <?php
 require_once "BaseModel.php";
 
-abstract class Utilisateur extends BaseModel{
+class Utilisateur extends BaseModel{
     protected $idUtilisateur;
     protected $nom;
     protected $email;
@@ -25,7 +25,7 @@ abstract class Utilisateur extends BaseModel{
     }
 
     public function getByEmail($email){
-        $requete = "SELECT * FROM utilisateurs WHERE email = :e";
+        $requete = "SELECT * FROM utilisateurs WHERE email = :e;";
         $stmt = $this->db->prepare($requete);
         $stmt->bindparam(":e",$email);
         if($stmt->execute()){
