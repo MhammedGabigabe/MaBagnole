@@ -31,4 +31,13 @@ if(isset($_POST['ajouter_mass'])){
     header("Location: ../views/categories.php");
     exit;
 }
+
+$listeCategories = $categorie->getAll();
+
+if(isset($_POST['supprimer_cat'])){
+    $id = $_POST['supprimer_cat'];
+    $categorie->supprimerCategorie($id);
+    header("Location: ../views/categories.php");
+    exit;
+}
 ?>

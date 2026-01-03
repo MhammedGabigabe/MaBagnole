@@ -44,5 +44,21 @@ class Categorie extends BaseModel {
                 $stmt->execute();
         }
     }
+
+    public function getAll(){
+        $requete = "SELECT *FROM categories";
+        $stmt = $this->db->prepare($requete);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function supprimerCategorie($id){
+        $requete = "DELETE FROM categories WHERE id_categorie = :id;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+    }
+
+    
 }
 ?>

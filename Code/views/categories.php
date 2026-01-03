@@ -1,3 +1,6 @@
+<?php
+require_once "../controllers/categorie.php";
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -63,26 +66,28 @@
                     <tr>
                         <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-wider">Nom de la catégorie</th>
                         <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-wider text-center">Véhicules liés</th>
-                        <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-wider">Dernière mise à jour</th>
                         <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-wider text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-50">
-                    <tr class="hover:bg-emerald-50/30 transition-colors">
-                        <td class="px-8 py-5">
-                            <span class="font-bold text-gray-700 block">Économique</span>
-                            <span class="text-xs text-gray-400 italic">Voitures citadines à faible consommation</span>
-                        </td>
-                        <td class="px-8 py-5 text-center">
-                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">12 Voitures</span>
-                        </td>
-                        <td class="px-8 py-5 text-sm text-gray-500">Il y a 2 jours</td>
-                        <td class="px-8 py-5 text-right space-x-3">
-                            <button class="text-gray-400 hover:text-emerald-600 transition-colors"><i class="fas fa-pen"></i></button>
-                            <button class="text-gray-400 hover:text-red-600 transition-colors"><i class="fas fa-trash-can"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
+                <form method='POST'>
+                    <tbody class="divide-y divide-gray-50">
+                        <?php foreach($listeCategories as $cat){ ?>
+                            <tr class="hover:bg-emerald-50/30 transition-colors">
+                                <td class="px-8 py-5">
+                                    <span class="font-bold text-gray-700 block"><?= $cat['nom'] ?></span>
+                                    <span class="text-xs text-gray-400 italic"><?= $cat['description']?></span>
+                                </td>
+                                <td class="px-8 py-5 text-center">
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">12 Voitures</span>
+                                </td>
+                                <td class="px-8 py-5 text-right space-x-3">
+                                    <button name="modifier_cat"  class="text-gray-400 hover:text-emerald-600 transition-colors"><i class="fas fa-pen"></i></button>
+                                    <button name="supprimer_cat" value="<?= $cat['id_categorie']?>" class="text-gray-400 hover:text-red-600 transition-colors"><i class="fas fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </form>
             </table>
         </div>
     </main>
