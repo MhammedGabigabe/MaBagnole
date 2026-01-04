@@ -5,6 +5,7 @@ class Categorie extends BaseModel {
     private $idCategorie;
     private $nom;
     private $description ;
+    private $image;
 
     public function setId($valeur){
         $this->idCategorie = $valeur;
@@ -30,21 +31,31 @@ class Categorie extends BaseModel {
         return $this->description;
     }
 
+    public function setImage($valeur){
+        $this->image = $valeur;
+    }
+
+    public function getImage(){
+        return $this->image;
+    }
+
     public function ajouterCategorie(){
-        $requete = "INSERT INTO categories (nom, description) VALUES (:n, :d);";
+        $requete = "INSERT INTO categories (nom, description, image) VALUES (:n, :d, :i);";
         $stmt = $this->db->prepare($requete);
         $stmt->bindParam(":n", $this->nom);
         $stmt->bindParam(":d", $this->description);
+        $stmt->bindParam(":i", $this->image);
         return $stmt->execute();
     }
 
     public function ajouterEnMasse($categories){
-        $requete = "INSERT INTO categories (nom, description) VALUES (:n, :d)";
+        $requete = "INSERT INTO categories (nom, description, image) VALUES (:n, :d, :i)";
         $stmt = $this->db->prepare($requete);
 
         foreach ($categories as $cat) {
                 $stmt->bindValue(":n", $cat['nom']);
                 $stmt->bindValue(":d", $cat['desc']);
+                $stmt->bindValue(":i", $cat['img']);
                 $stmt->execute();
         }
     }
@@ -72,10 +83,11 @@ class Categorie extends BaseModel {
     }
 
     public function modifierCategorie(){
-        $requete = "UPDATE categories SET nom = :n, description = :d WHERE id_categorie = :id;";
+        $requete = "UPDATE categories SET nom = :n, description = :d,image= :i WHERE id_categorie = :id;";
         $stmt = $this->db->prepare($requete);
         $stmt->bindParam(":n", $this->nom);
         $stmt->bindParam(":d", $this->description);
+        $stmt->bindParam(":i", $this->image);
         $stmt->bindParam(":id",$this->idCategorie);
         return $stmt->execute();
     }

@@ -15,10 +15,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         exit;
     }else{
         unset($_SESSION['msg']);
+        $_SESSION['user_id'] = $res['id_utilisateur'];
+        $_SESSION['nom'] = $res['nom'];
         $_SESSION['role'] = $res['role'];
         $_SESSION['email'] = $res['email'];
         if($res['role'] == 'Admin'){
             header("Location: ../views/dashboard.php");
+            exit;
+        }else{
+            header("Location: ../views/categoriesClient.php");
             exit;
         }
 

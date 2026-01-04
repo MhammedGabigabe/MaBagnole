@@ -81,4 +81,7 @@ CREATE TABLE favoris (
 ALTER TABLE vehicules
 ADD COLUMN immatriculation UNIQUE;
 
+ALTER TABLE categories
+ADD COLUMN image varchar(255);
+
 

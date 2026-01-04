@@ -1,6 +1,11 @@
 <?php
+session_start();
 require_once "../controllers/categorie.php";
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -35,6 +40,11 @@ require_once "../controllers/categorie.php";
                 <i class="fas fa-comment-slash mr-3 w-5"></i> Avis
             </a>
         </nav>
+        <div class="p-6 border-t border-emerald-800">
+            <a href="../controllers/logout.php" class="flex items-center text-emerald-300 hover:text-white transition-colors font-bold text-sm">
+                <i class="fas fa-sign-out-alt mr-2"></i> Se déconnecter
+            </a>
+        </div>
     </aside>
 
     <main class="flex-1 overflow-y-auto p-10">
@@ -120,7 +130,7 @@ require_once "../controllers/categorie.php";
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Liste des catégories (une par ligne)</label>
                     <textarea name="categories_list" rows="6" 
                         class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300"
-                        placeholder="Luxe;Voitures haut de gamme&#10;Utilitaire;Véhicules professionnels&#10;SUV;4x4 et SUV familiaux..."></textarea>
+                        placeholder="Luxe;Voitures haut de gamme; image(URL)&#10;Utilitaire;Véhicules professionnels; image(URL)&#10;SUV;4x4 et SUV familiaux; image(URL)..."></textarea>
                     
                     <div class="mt-6 flex gap-3">
                         <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">Annuler</button>
@@ -156,6 +166,13 @@ require_once "../controllers/categorie.php";
                         <textarea name="description" rows="3" 
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
                             placeholder="Brève description..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Image</label>
+                        <input type="text" name="image" required 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                            placeholder="URL">
                     </div>
 
                     <div class="pt-4 flex gap-3">
@@ -208,11 +225,24 @@ require_once "../controllers/categorie.php";
                         <?php } ?>
                     </div>
 
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Image</label>
+                        <?php if($cat_a_modifier){ ?>
+                            <input type="text" name="image" required 
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                                value ="<?=$cat_a_modifier['image'] ?>">
+                        <?php }else{?>
+                            <input type="text" name="image" required 
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                                placeholder="URL">
+                        <?php } ?>
+                    </div>
+
                     <div class="pt-4 flex gap-3">
                         <button onclick="closeEditModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all">
                             Annuler
                         </button>
-                        <button type="submit" value="<?= $cat['id_categorie']?>" name="modifier" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
+                        <button type="submit" value="<?= $cat_a_modifier['id_categorie']?>" name="modifier" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
                             Metre à jour
                         </button>
                     </div>

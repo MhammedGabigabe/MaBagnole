@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -31,6 +40,11 @@
                 <i class="fas fa-comment-slash mr-3 w-5"></i> Avis
             </a>
         </nav>
+        <div class="p-6 border-t border-emerald-800">
+            <a href="../controllers/logout.php" class="flex items-center text-emerald-300 hover:text-white transition-colors font-bold text-sm">
+                <i class="fas fa-sign-out-alt mr-2"></i> Se déconnecter
+            </a>
+        </div>
     </aside>
 
     <main class="flex-1 overflow-y-auto p-10">
