@@ -67,10 +67,21 @@ if (!isset($_SESSION['user_id'])) {
                 <h2 class="text-3xl font-extrabold text-gray-900">Véhicules disponibles</h2>
                 <p class="text-gray-500">Cliquez sur un véhicule pour voir les détails.</p>
             </div>
-            <div class="relative">
-                <input type="text" placeholder="Modèle, marque..." class="pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none w-64">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
-            </div>
+            <form method="POST" action="categoriesClient.php" class="flex items-center gap-2 mb-6">
+                <div class="relative flex-1">
+                    <input 
+                        type="text" 
+                        name="recherche"
+                        placeholder="Modèle, marque..." 
+                        value="<?= htmlspecialchars($_POST['recherche'] ?? '') ?>"
+                        class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <button type="submit" name="btn_recherche"
+                    class="bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 font-bold">
+                    Rechercher
+                </button>
+            </form>
         </header>
         <form method="POST" action="detailsVehicule.php">
             <div id="vehicules-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

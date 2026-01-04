@@ -124,5 +124,16 @@ class Vehicule extends BaseModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function searchVehicules($motCle) {
+        $requete = " SELECT * FROM vehicules WHERE marque LIKE :mot 
+                     OR modele LIKE :mot OR motorisation LIKE :mot OR boite_vitesse LIKE :mot";
+        $motCle = "%$motCle%";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":mot", $motCle);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
 ?>

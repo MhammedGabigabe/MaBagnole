@@ -3,7 +3,17 @@ require_once "../models/Vehicule.php";
 
 $vehicule = new Vehicule();
 
+
 $listeVehicules = $vehicule->getAll();
+
+if(isset($_POST['btn_recherche'])){
+    $recherche = $_POST['recherche'] ?? null;
+    if ($recherche) {
+        $listeVehicules = $vehicule->searchVehicules($recherche);
+    } else {
+        $listeVehicules = $vehicule->getAll();
+    }
+}
 
 $vehiDisp = $vehicule->vehiculesDispo();
 $vehiLouee = $vehicule->vehiculesLouee();
