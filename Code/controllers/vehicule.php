@@ -71,4 +71,9 @@ if(isset($_POST['supprimer_vehi'])){
     header("Location: ../views/vehicules.php");
     exit;
 }
+
+if(isset($_POST['deatilsVehicule'])){
+    $id = $_POST['deatilsVehicule'];
+    $deatilsVehi = $vehicule->getById($id);
+}
 ?>
