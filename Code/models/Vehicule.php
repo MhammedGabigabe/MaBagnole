@@ -116,5 +116,13 @@ class Vehicule extends BaseModel {
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
+    public function vehiculesCat(){
+        $requete = "SELECT * FROM vehicules WHERE id_categ = :idC;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":idC", $this->idCategorie);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

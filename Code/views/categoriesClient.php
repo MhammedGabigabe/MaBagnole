@@ -35,23 +35,28 @@ if (!isset($_SESSION['user_id'])) {
             <h2 class="text-3xl font-extrabold text-gray-900">Nos Catégories</h2>
         </header>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <?php foreach ($listeCategories as $cat){ ?>
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
-                <div class="h-32 overflow-hidden">
-                    <img src="<?= $cat['image'] ?>" class="w-full h-full object-cover group-hover:scale-110 transition-duration-500">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <?php foreach ($listeCategories as $cat){ ?>
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
+                    <div class="h-32 overflow-hidden">
+                        <img src="<?= $cat['image'] ?>" class="w-full h-full object-cover group-hover:scale-110 transition-duration-500">
+                    </div>
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-gray-800"><?= $cat['nom'] ?></h3>
+                        <button
+                            type="button"
+                            onclick="filtrerCategorie(<?= $cat['id_categorie'] ?>)"
+                            class="text-xs text-emerald-600 font-bold hover:underline">
+                            Voir cette catégorie
+                        </button>
+                    </div>
                 </div>
-                <div class="p-4 text-center">
-                    <h3 class="font-bold text-gray-800"><?= $cat['nom'] ?></h3>
-                    <a href="?cat=<?= $cat['id_categorie'] ?>" class="text-xs text-emerald-600 font-bold hover:underline">Voir cette catégorie</a>
-                </div>
+                <?php } ?>
             </div>
-            <?php } ?>
-        </div>
 
         <hr class="border-gray-200 mb-12">
 
-        <header class="mb-8 flex justify-between items-center">
+        <header id="vehicules" class="mb-8 flex justify-between items-center">
             <div>
                 <h2 class="text-3xl font-extrabold text-gray-900">Véhicules disponibles</h2>
                 <p class="text-gray-500">Cliquez sur un véhicule pour voir les détails.</p>
@@ -62,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </header>
         <form method="POST" action="detailsVehicule.php">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="vehicules-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <?php 
                 foreach ($listeVehicules as $vehicule){ 
@@ -92,5 +97,22 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </form>
     </main>
+    <script>
+        function filtrerCategorie(idCategorie) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "../controllers/vehiculeAjax.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    document.getElementById("vehicules-container").innerHTML = xhr.responseText;
+                    document.getElementById("vehicules").scrollIntoView({ behavior: "smooth" });
+                }
+            };
+
+            xhr.send("idCategorie=" + idCategorie);
+        }
+    </script>
+
 </body>
 </html>

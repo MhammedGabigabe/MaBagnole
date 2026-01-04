@@ -8,6 +8,12 @@ $listeVehicules = $vehicule->getAll();
 $vehiDisp = $vehicule->vehiculesDispo();
 $vehiLouee = $vehicule->vehiculesLouee();
 
+if(isset($_POST['vehiculesCat'])){
+    $vehicule->idCategorie = $_POST['vehiculesCat'];
+    $listeVehicules = $vehicule->vehiculesCat();
+}
+
+
 $vehi_a_modifier = null;
 if(isset($_POST['editModal_vehi'])){
     $vehi_a_modifier = $vehicule->getById($_POST['editModal_vehi']);
