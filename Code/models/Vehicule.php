@@ -72,5 +72,32 @@ class Vehicule extends BaseModel {
         $stmt->bindParam(":id", $id);
         $stmt->execute();
     }
+
+    public function getById($id){
+        $requete = "SELECT * FROM vehicules WHERE id_vehicule = :id;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function modifierVehicule(){
+        $requete = "UPDATE `vehicules` 
+                    SET `modele`= :mod,`marque`= :mar,`prix_jour`= :prix,`image`= :img,
+                    `boite_vitesse`= :boiVit,`motorisation`= :mot,`id_categ`= :idC,
+                    `immatriculation`= :im 
+                    WHERE `id_vehicule`= :idV;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":mod", $this->modele);
+        $stmt->bindParam(":mar", $this->marque);
+        $stmt->bindParam(":prix", $this->prixJour);
+        $stmt->bindParam(":img", $this->image);
+        $stmt->bindParam(":boiVit", $this->boiteVitesse);
+        $stmt->bindParam(":mot", $this->motorisation);
+        $stmt->bindParam(":idC", $this->idCategorie);
+        $stmt->bindParam(":im", $this->immatriculation);
+        $stmt->bindParam(":idV", $this->idVeicule);
+        return $stmt->execute();
+    }
 }
 ?>

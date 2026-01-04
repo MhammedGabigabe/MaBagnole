@@ -113,7 +113,7 @@ require_once "../controllers/categorie.php";
                             </td>
                             <form method="POST">
                                 <td class="px-8 py-5 text-right space-x-2">
-                                    <button class="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"><i class="fas fa-edit"></i></button>
+                                    <button name="editModal_vehi" value="<?= $vehi['id_vehicule'] ?>" class="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"><i class="fas fa-edit"></i></button>
                                     <button name="supprimer_vehi" value="<?= $vehi['id_vehicule'] ?>" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><i class="fas fa-trash-can"></i></button>
                                 </td>
                             </form>
@@ -198,6 +198,7 @@ require_once "../controllers/categorie.php";
                         <div>
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Boîte de vitesse</label>
                             <select name="boite_vitesse" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="">-- Choisir boite a vitesse --</option>
                                 <option value="Manuelle">Manuelle</option>
                                 <option value="Automatique">Automatique</option>
                             </select>
@@ -225,6 +226,88 @@ require_once "../controllers/categorie.php";
         </div>
     </div>
 
+    <div id="editVehicleModal" class="hidden fixed inset-0 bg-emerald-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Modifier un Véhicule</h3>
+                    <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <form action="../controllers/vehicule.php" method="POST" enctype="multipart/form-data">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Marque</label>
+                            <input type="text" name="marque" required value="<?= $vehi_a_modifier['marque'] ?>" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Modèle</label>
+                            <input type="text" name="modele" required value="<?= $vehi_a_modifier['modele'] ?>" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Immatriculation</label>
+                            <input type="text" name="immatriculation" required value="<?= $vehi_a_modifier['immatriculation'] ?>" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Prix par jour (DH)</label>
+                            <input type="number" name="prix_jour" required value="<?= $vehi_a_modifier['prix_jour'] ?>" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Catégorie</label>
+                                <select name="id_categ"
+                                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl
+                                    focus:ring-2 focus:ring-emerald-500 outline-none">
+
+                                    <option value="">-- Choisir une catégorie --</option>
+
+                                    <?php foreach ($listeCategories as $cat){ ?>
+                                        <option value="<?= $cat['id_categorie'] ?>"
+                                            <?= ($cat['id_categorie'] == $vehi_a_modifier['id_categ']) ? 'selected' : '' ?>>
+                                            <?= $cat['nom'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Boîte de vitesse</label>
+                            <select name="boite_vitesse"
+                                class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl
+                                focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="">-- Choisir boite a vitesse --</option>
+                                <option value="Manuelle"
+                                    <?= ($vehi_a_modifier['boite_vitesse'] == 'Manuelle') ? 'selected' : '' ?>>
+                                    Manuelle
+                                </option>
+
+                                <option value="Automatique"
+                                    <?= ($vehi_a_modifier['boite_vitesse'] == 'Automatique') ? 'selected' : '' ?>>
+                                    Automatique
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Motorisation</label>
+                            <input type="text" name="motorisation" value="<?= $vehi_a_modifier['motorisation'] ?>" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Photo du véhicule</label>
+                            <input type="text" name="image" value="<?= $vehi_a_modifier['image'] ?>" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex gap-4">
+                        <button type="button" onclick="closeEditModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">
+                            Annuler
+                        </button>
+                        <button type="submit" name="maj" value="<?= $vehi_a_modifier['id_vehicule']?>" class="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
+                            Metre à jour
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         function openModal() {
             document.getElementById('massVehicleModal').classList.remove('hidden');
@@ -239,6 +322,15 @@ require_once "../controllers/categorie.php";
         function closeSingleModal() {
             document.getElementById('singleVehicleModal').classList.add('hidden');
         }
+        
+        function closeEditModal() {
+            document.getElementById('editVehicleModal').classList.add('hidden');
+        }
     </script>
+    <?php if ($vehi_a_modifier){ ?>
+        <script>
+            document.getElementById('editVehicleModal').classList.remove('hidden');
+        </script>
+    <?php } ?>
 </body>
 </html>

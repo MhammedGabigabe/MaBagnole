@@ -5,6 +5,26 @@ $vehicule = new Vehicule();
 
 $listeVehicules = $vehicule->getAll();
 
+$vehi_a_modifier = null;
+if(isset($_POST['editModal_vehi'])){
+    $vehi_a_modifier = $vehicule->getById($_POST['editModal_vehi']);
+}
+
+if(isset($_POST['maj'])){
+    $vehicule->idVeicule = $_POST['maj'];
+    $vehicule->modele = $_POST['modele'];
+    $vehicule->marque = $_POST['marque'];
+    $vehicule->immatriculation = $_POST['immatriculation'];
+    $vehicule->prixJour = $_POST['prix_jour'];
+    $vehicule->image = $_POST['image'];
+    $vehicule->boiteVitesse = $_POST['boite_vitesse'];
+    $vehicule->motorisation = $_POST['motorisation'];
+    $vehicule->idCategorie = $_POST['id_categ'];
+    $vehicule->modifierVehicule();
+    header("Location: ../views/vehicules.php");
+    exit;
+}
+
 if(isset($_POST['ajouter_seul'])){
     $vehicule->immatriculation = $_POST['immatriculation'];
     $vehicule->modele = $_POST['modele'];
