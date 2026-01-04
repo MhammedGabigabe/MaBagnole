@@ -22,7 +22,7 @@ require_once "../controllers/categorie.php";
             <a href="dashboard.php" class="flex items-center p-3 text-emerald-100 hover:bg-emerald-800 rounded-xl transition-all">
                 <i class="fas fa-chart-pie mr-3 w-5"></i> Dashboard
             </a>
-            <a href="vehicles.php" class="flex items-center p-3 text-emerald-100 hover:bg-emerald-800 rounded-xl transition-all">
+            <a href="vehicules.php" class="flex items-center p-3 text-emerald-100 hover:bg-emerald-800 rounded-xl transition-all">
                 <i class="fas fa-car mr-3 w-5"></i> Véhicules
             </a>
             <a href="categories.php" class="flex items-center p-3 bg-emerald-700 text-white rounded-xl shadow-inner">

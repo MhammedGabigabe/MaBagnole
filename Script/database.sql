@@ -78,4 +78,7 @@ CREATE TABLE favoris (
         ON DELETE CASCADE
 );
 
+ALTER TABLE vehicules
+ADD COLUMN immatriculation UNIQUE;
+
 

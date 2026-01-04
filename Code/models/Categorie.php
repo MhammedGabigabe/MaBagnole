@@ -50,7 +50,7 @@ class Categorie extends BaseModel {
     }
 
     public function getAll(){
-        $requete = "SELECT *FROM categories";
+        $requete = "SELECT * FROM categories";
         $stmt = $this->db->prepare($requete);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

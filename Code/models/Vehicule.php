@@ -1,0 +1,54 @@
+<?php
+require_once "BaseModel.php";
+
+class Vehicule extends BaseModel {
+    private $idVeicule;
+    private $immatriculation;
+    private $modele;
+    private $marque;
+    private $prixJour;
+    private $disponibilite;
+    private $image;
+    private $boiteVitesse;
+    private $motorisation;
+    private $idCategorie;
+
+    public function __set($p, $v){
+        if(property_exists($this, $p)){
+            $this->$p = $v;
+        }else{
+            throw new Exception("la propriété '$p' n'existe pas dans la classe" .get_class($this));
+        }
+    }
+
+    public function __get($p){
+        if(property_exists($this,$p)){
+            return $this->$p;
+        }else{
+            throw new Exception("la propriété '$p' n'existe pas dans la classe" .get_class($this));
+        }
+    }
+
+    public function ajouterVehicule(){
+        $requete = "INSERT INTO `vehicules`(`modele`, `marque`, `prix_jour`, `image`, `boite_vitesse`, `motorisation`, `id_categ`, `immatriculation`) 
+                    VALUES (:mod, :mar, :prix, :img, :boiVit, :mot, :idC, :im);";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":mod", $this->modele);
+        $stmt->bindParam(":mar", $this->marque);
+        $stmt->bindParam(":prix", $this->prixJour);
+        $stmt->bindParam(":img", $this->image);
+        $stmt->bindParam(":boiVit", $this->boiteVitesse);
+        $stmt->bindParam(":mot", $this->motorisation);
+        $stmt->bindParam(":idC", $this->idCategorie);
+        $stmt->bindParam(":im", $this->immatriculation);
+        return $stmt->execute();
+    }
+
+    public function getAll(){
+        $requete = "SELECT v.*, c.nom FROM vehicules v, categories c where v.id_categ = c.id_categorie;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+?>
