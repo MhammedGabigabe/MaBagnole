@@ -47,12 +47,12 @@ require_once "../controllers/categorie.php";
             
             <div class="flex gap-4">
                 <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 text-center">
-                    <span class="block text-2xl font-black text-emerald-600">42</span>
-                    <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Actifs</span>
+                    <span class="block text-2xl font-black text-emerald-600"><?= $vehiDisp ?></span>
+                    <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Voitures Diponibles</span>
                 </div>
                 <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 text-center">
-                    <span class="block text-2xl font-black text-amber-500">05</span>
-                    <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">En Réparation</span>
+                    <span class="block text-2xl font-black text-amber-500"><?= $vehiLouee ?></span>
+                    <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Voitures Louées</span>
                 </div>
             </div>
         </div>

@@ -100,5 +100,21 @@ class Vehicule extends BaseModel {
         return $stmt->execute();
     }
 
+    public function vehiculesDispo(){
+        $requete = "SELECT COUNT(*) as total FROM vehicules WHERE disponibilite = :d;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindValue(":d", 1);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
+    public function vehiculesLouee(){
+        $requete = "SELECT COUNT(*) as total FROM vehicules WHERE disponibilite = :d;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindValue(":d", 0);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
 }
 ?>

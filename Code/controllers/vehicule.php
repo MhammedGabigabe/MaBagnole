@@ -5,6 +5,9 @@ $vehicule = new Vehicule();
 
 $listeVehicules = $vehicule->getAll();
 
+$vehiDisp = $vehicule->vehiculesDispo();
+$vehiLouee = $vehicule->vehiculesLouee();
+
 $vehi_a_modifier = null;
 if(isset($_POST['editModal_vehi'])){
     $vehi_a_modifier = $vehicule->getById($_POST['editModal_vehi']);
