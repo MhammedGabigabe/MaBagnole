@@ -19,4 +19,33 @@ if(isset($_POST['ajouter_seul'])){
     header("Location: ../views/vehicules.php");
     exit;
 }
+
+if(isset($_POST['mass_add_vehicles'])){
+    $texte = $_POST['vehicles_data'];
+    $lignes = explode("\n",$texte);
+    $vehicules = [];
+
+    foreach($lignes as $ligne){
+        $parties = explode("|", $ligne, 5);
+        $marque = trim($parties[0] ?? "");
+        $modele = trim($parties[1] ?? "");
+        $prix = trim($parties[2] ?? "");
+        $id_Cat = trim($parties[3] ?? "");
+        $imm = trim($parties[4] ?? "");
+
+        if($marque !== ""){
+            $vehicules[] = ['marque'=> $marque, 'modele'=> $modele, 'prix'=>$prix, 'id_Cat'=> $id_Cat, 'imm'=>$imm];
+        }
+    }
+    $vehicule->ajouterEnMasse($vehicules);
+    header("Location: ../views/vehicules.php");
+    exit;
+}
+
+if(isset($_POST['supprimer_vehi'])){
+    $id = $_POST['supprimer_vehi'];
+    $vehicule->supprimerVehicule($id);
+    header("Location: ../views/vehicules.php");
+    exit;
+}
 ?>

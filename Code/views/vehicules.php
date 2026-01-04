@@ -1,5 +1,6 @@
 <?php
 require_once "../controllers/vehicule.php";
+require_once "../controllers/categorie.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,7 +60,7 @@ require_once "../controllers/vehicule.php";
         <div class="flex justify-between items-center mb-6">
             <div class="flex gap-4">
                 <button onclick="openModal()" class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all flex items-center">
-                    <i class="fas fa-file-import mr-2"></i> Import en masse (CSV/Liste)
+                    <i class="fas fa-layer-group mr-2"></i> Ajout en masse
                 </button>
                 <button onclick="openSingleModal()" class="bg-white border border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-50 transition-all flex items-center">
                     <i class="fas fa-plus mr-2 text-emerald-600"></i> Nouveau véhicule
@@ -110,10 +111,12 @@ require_once "../controllers/vehicule.php";
                                     </span>
                                 <?php } ?>
                             </td>
-                            <td class="px-8 py-5 text-right space-x-2">
-                                <button class="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"><i class="fas fa-edit"></i></button>
-                                <button class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><i class="fas fa-trash-can"></i></button>
-                            </td>
+                            <form method="POST">
+                                <td class="px-8 py-5 text-right space-x-2">
+                                    <button class="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"><i class="fas fa-edit"></i></button>
+                                    <button name="supprimer_vehi" value="<?= $vehi['id_vehicule'] ?>" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><i class="fas fa-trash-can"></i></button>
+                                </td>
+                            </form>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -132,17 +135,17 @@ require_once "../controllers/vehicule.php";
                     <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
                 </div>
                 
-                <form action="../controllers/vehicle_controller.php" method="POST">
+                <form action="../controllers/vehicule.php" method="POST">
                     <textarea name="vehicles_data" rows="8" 
                         class="w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-mono text-sm"
-                        placeholder="Dacia Logan | 250 | Économique | 1234-B-7&#10;Golf 8 | 500 | Compacte | 5678-A-15..."></textarea>
+                        placeholder="Dacia | Logan | 250 | 1 | 1234-B-7&#10;Golf | 8 | 500 | 5 | 5678-A-15..."></textarea>
                     
                     <div class="mt-6 flex gap-4">
                         <button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">
                             Annuler
                         </button>
                         <button type="submit" name="mass_add_vehicles" class="flex-1 py-4 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all">
-                            Lancer l'importation
+                            Enregistrer la liste
                         </button>
                     </div>
                 </form>
@@ -178,9 +181,18 @@ require_once "../controllers/vehicule.php";
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Catégorie</label>
-                            <select name="id_categ" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
-                                <option value="1">Économique</option>
-                                <option value="2">Luxe & SUV</option>
+                                <select name="id_categ"
+                                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl
+                                        focus:ring-2 focus:ring-emerald-500 outline-none">
+
+                                    <option value="">-- Choisir une catégorie --</option>
+
+                                    <?php foreach ($listeCategories as $cat){ ?>
+                                        <option value="<?= $cat['id_categorie'] ?>">
+                                            <?= $cat['nom'] ?>
+                                        </option>
+                                    <?php } ?>
+
                                 </select>
                         </div>
                         <div>

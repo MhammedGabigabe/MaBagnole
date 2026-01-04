@@ -50,5 +50,27 @@ class Vehicule extends BaseModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function ajouterEnMasse($vehicules){
+        $requete = "INSERT INTO `vehicules`(`modele`, `marque`, `prix_jour`, `id_categ`, `immatriculation`) 
+                    VALUES (:mod, :mar, :prix, :idC, :im);";
+        $stmt = $this->db->prepare($requete);
+
+        foreach ($vehicules as $vehi) {
+            $stmt->bindValue(":mod", $vehi['modele']);
+            $stmt->bindValue(":mar", $vehi['marque']);
+            $stmt->bindValue(":prix", $vehi['prix']);
+            $stmt->bindValue(":idC", $vehi['id_Cat']);
+            $stmt->bindValue(":im", $vehi['imm']);
+            $stmt->execute();
+        }
+    }
+
+    public function supprimerVehicule($id){
+        $requete = "DELETE FROM vehicules WHERE id_vehicule = :id;";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+    }
 }
 ?>
