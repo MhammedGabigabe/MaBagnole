@@ -24,6 +24,12 @@ if (!isset($_SESSION['user_id'])) {
         <h1 class="text-2xl font-black text-emerald-700 italic">MA<span class="text-gray-800">BAGNOLE</span></h1>
         <div class="flex items-center gap-6">
             <span class="text-gray-600 hidden md:block">Bienvenue, <strong class="text-emerald-600"><?= $_SESSION['nom'] ?? 'Client'; ?></strong></span>
+
+            <!-- Bouton Mes Réservations -->
+            <a href="reservationsClient.php" class="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-emerald-700 transition-colors">
+                <i class="fa-solid fa-list"></i> Mes Réservations
+            </a>
+
             <a href="../controllers/logout.php" class="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-red-100 transition-colors">
                 <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
             </a>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "../controllers/vehicule.php";
+require_once "../controllers/reservation.php";
 
 if (!isset($_SESSION['user_id'])) { 
     header("Location: login.php"); 
@@ -48,11 +49,71 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                <button class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition-all active:scale-95">
+                <button 
+                    onclick="openModal()"
+                    class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition-all active:scale-95">
                     RÉSERVER MAINTENANT
                 </button>
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div id="reservationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-lg p-8 relative">
+
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Réserver ce véhicule</h2>
+
+            <form method="POST" class="space-y-4">
+
+                <!-- hidden -->
+                <input type="hidden" name="id_vehi" value="<?= $deatilsVehi['id_vehicule'] ?>">
+                <input type="hidden" name="id_client" value="<?= $_SESSION['user_id'] ?>">
+
+                <div>
+                    <label class="text-sm text-gray-600">Date de début</label>
+                    <input type="datetime-local" name="date_debut" required
+                        class="w-full border rounded-xl px-4 py-2">
+                </div>
+
+                <div>
+                    <label class="text-sm text-gray-600">Date de fin</label>
+                    <input type="datetime-local" name="date_fin" required
+                        class="w-full border rounded-xl px-4 py-2">
+                </div>
+
+                <div>
+                    <label class="text-sm text-gray-600">Lieu de prise</label>
+                    <input type="text" name="lieu_prise" required
+                        class="w-full border rounded-xl px-4 py-2">
+                </div>
+
+                <div>
+                    <label class="text-sm text-gray-600">Lieu de retour</label>
+                    <input type="text" name="lieu_retour" required
+                        class="w-full border rounded-xl px-4 py-2">
+                </div>
+
+                <button type="submit" name="confirmeReservation"
+                    class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl">
+                    Confirmer la réservation
+                </button>
+
+            </form>
+        </div>
+    </div>
+    <script>
+    function openModal() {
+        document.getElementById('reservationModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('reservationModal').classList.add('hidden');
+    }
+    </script>
+
 </body>
 </html>

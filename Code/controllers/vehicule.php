@@ -78,8 +78,12 @@ if(isset($_POST['supprimer_vehi'])){
     exit;
 }
 
+
+
 if(isset($_POST['deatilsVehicule'])){
     $id = $_POST['deatilsVehicule'];
+    $_SESSION['idVehicule'] = $id;
     $deatilsVehi = $vehicule->getById($id);
 }
+
 ?>
