@@ -46,7 +46,7 @@ require_once "../controllers/categorie.php";
             </div>
             <div class="flex gap-4">
                 <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 text-center">
-                    <span class="block text-2xl font-black text-emerald-600">08</span>
+                    <span class="block text-2xl font-black text-emerald-600"><?= $nbCategorie ?></span>
                     <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Total Catégories</span>
                 </div>
             </div>
@@ -79,7 +79,20 @@ require_once "../controllers/categorie.php";
                                     <span class="text-xs text-gray-400 italic"><?= $cat['description']?></span>
                                 </td>
                                 <td class="px-8 py-5 text-center">
-                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">12 Voitures</span>
+                                    <?php
+                                        $nb = $categorie->nbVehiCat($cat['id_categorie']);
+
+                                        if ($nb == 0) {
+                                            $texte = "Aucune voiture";
+                                        } elseif ($nb == 1) {
+                                            $texte = "1 voiture";
+                                        } else {
+                                            $texte = $nb . " voitures";
+                                        }
+                                    ?>
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
+                                        <?= $texte ?>
+                                    </span>
                                 </td>
                                 <form method="POST">
                                     <td class="px-8 py-5 text-right space-x-3">

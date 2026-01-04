@@ -99,5 +99,6 @@ class Vehicule extends BaseModel {
         $stmt->bindParam(":idV", $this->idVeicule);
         return $stmt->execute();
     }
+
 }
 ?>

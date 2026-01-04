@@ -4,6 +4,9 @@ require_once "../models/Categorie.php";
 $categorie =new Categorie();
 
 $listeCategories = $categorie->getAll();
+$nbCategorie = count($listeCategories);
+
+
 
 $cat_a_modifier = null;
 if(isset($_POST['id_a_modifier'])){

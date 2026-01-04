@@ -79,5 +79,13 @@ class Categorie extends BaseModel {
         $stmt->bindParam(":id",$this->idCategorie);
         return $stmt->execute();
     }
+
+    public function nbVehiCat($idC){
+        $requete = "SELECT COUNT(id_vehicule) as total FROM vehicules WHERE id_categ = :idCat";
+        $stmt = $this->db->prepare($requete);
+        $stmt->bindParam(":idCat", $idC);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
 }
 ?>
