@@ -85,10 +85,7 @@ if (!isset($_SESSION['user_id'])) {
         </header>
         <form method="POST" action="detailsVehicule.php">
             <div id="vehicules-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <?php 
-                foreach ($listeVehicules as $vehicule){ 
-                ?>
+                <?php foreach ($listeVehicules as $vehicule){ ?>
                     <button name="deatilsVehicule" type="submit" value="<?= $vehicule['id_vehicule'] ?>" class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all">
                         <div class="relative h-60">
                             <img src="<?= $vehicule['image'] ?>" class="w-full h-full object-cover">
@@ -113,6 +110,18 @@ if (!isset($_SESSION['user_id'])) {
                 <?php } ?>
             </div>
         </form>
+        <form method="POST" action="categoriesClient.php#vehicules">
+
+            <div class="flex justify-center gap-2 mt-6">
+                <?php for($i=1; $i<=$totalPages ; $i++){ ?>
+                    <button type="submit" name="page" value="<?= $i ?>" 
+                        class="px-3 py-1 rounded-lg border <?= ($i == $page) ? 'bg-emerald-600 text-white' : 'bg-white text-gray-700' ?>">
+                        <?= $i ?>
+                    </button>
+                <?php } ?>
+            </div>
+        </form>
+        
     </main>
     <script>
         function filtrerCategorie(idCategorie) {

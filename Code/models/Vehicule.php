@@ -134,6 +134,47 @@ class Vehicule extends BaseModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getVehiculesDisponibles($limit, $offset, $recherche = null)
+    {
+        $requete = "SELECT * FROM vehicules WHERE disponibilite = 1";
+
+        if ($recherche) {
+            $requete .= " AND (marque LIKE :recherche OR modele LIKE :recherche)";
+        }
+
+        $requete .= " LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->db->prepare($requete);
+
+        if ($recherche) {
+            $stmt->bindValue(':recherche', "%$recherche%", PDO::PARAM_STR);
+        }
+
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countVehiculesDisponibles($recherche = null)
+    {
+        $requete = "SELECT COUNT(*) FROM vehicules WHERE disponibilite = 1";
+
+        if ($recherche) {
+            $requete .= " AND (marque LIKE :recherche OR modele LIKE :recherche)";
+        }
+
+        $stmt = $this->db->prepare($requete);
+
+        if ($recherche) {
+            $stmt->bindValue(':recherche', "%$recherche%", PDO::PARAM_STR);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }   
+
 
 }
 ?>

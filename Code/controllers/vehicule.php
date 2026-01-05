@@ -96,4 +96,17 @@ if(isset($_POST['deatilsVehicule'])){
     $deatilsVehi = $vehicule->getById($id);
 }
 
+$limit = 3; 
+$page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
+$page = max($page, 1);
+
+$offset = ($page - 1) * $limit;
+
+$recherche = $_POST['recherche'] ?? null;
+ 
+
+$listeVehicules = $vehicule->getVehiculesDisponibles($limit, $offset, $recherche);
+$totalVehicules = $vehicule->countVehiculesDisponibles($recherche);
+$totalPages = ceil($totalVehicules / $limit);
+
 ?>
